@@ -1,22 +1,44 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Radium from 'radium';
 import './Person.scss';
+import { PersonIntr } from '../../../Core/Intefaces/PersonInterface';
 
-const Person = (props: any) => {
+interface State {
+    person: PersonIntr;
+}
 
-    const style: any = {
-        '@media (max-width: 500px)': {
-            width: '100%'
-        }
-    };
+interface Props {
+    id: number;
+    name: string;
+    key: number;
+    age: number;
+    clicked: (index: number) => void;
+    changed: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+}
 
-    return (
-        <div onClick={props.click} className="Person" style={style}>
-            <p>I'am {props.name}</p>
-            <input type="text" onChange={props.changed} value={props.name} />
-        </div>
+class Person extends Component<Props, State> {
 
-    )
+    constructor(props: Props) {
+        super(props)
+    }
+
+    render() {
+        const style: any = {
+            '@media (max-width: 500px)': {
+                width: '100%'
+            }
+        };
+
+        return (
+            <div
+                className="Person" style={style}>
+                <p onClick={() => this.props.clicked(this.props.id)} >I'am {this.props.name}</p>
+                <input type="text"
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.changed(event, this.props.id)} value={this.props.name}
+                />
+            </div>
+        );
+    }
 }
 
 export default Radium(Person);

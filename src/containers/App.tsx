@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import Radium, { StyleRoot } from 'radium';
 
 import './App.css';
-import Header from '../components/Header/Header';
-import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 import { PersonIntr } from '../Core/Intefaces/PersonInterface';
 
 class App extends Component {
+
+  constructor(props: any) {
+    super(props);
+  }
 
   state = {
     persons: [
@@ -16,8 +20,16 @@ class App extends Component {
     showPersons: false
   }
 
-  nameChangeHandler = (event: any, id: number) => {
+  static getDerivedStateFromProps(props: any, state: any) {
+    return state;
+  }
 
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  nameChangeHandler = (event: any, id: number) => {
+    console.log('xxx', event, id);
     let person = this.state.persons.find(person => person.id === id);
 
     if (person) {
@@ -45,70 +57,27 @@ class App extends Component {
     });
   }
 
-  render() {
-
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      height: '40px',
-      width: '100px',
-      marginTop: '10px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
-
+  render() {  
     let persons = null;
 
     {/* Normal nested if */ }
     if (this.state.showPersons) {
-      persons = (
-        < div >
-          {
-            this.state.persons.map((person: PersonIntr, index: number) => {
-              return <Person name={person.name} key={person.id} age={person.age} click={() => this.deletePersonHandle(index)} changed={(event: any) => this.nameChangeHandler(event, person.id)}></Person>
-            })
-          }
-        </div>
-      );
-
-      style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'blue',
-        color: 'black'
-      }
-    }
-
-    // let classes: string = ['red', 'bold'].join(' ');
-    let classes = [];
-
-    if (this.state.persons.length <= 1) {
-      classes.push('red');
-    }
-    if (this.state.persons.length <= 2) {
-      classes.push('bold');
+      persons =
+        <Persons
+          persons={this.state.persons}
+          clicked={this.deletePersonHandle}
+          changed={this.nameChangeHandler}
+        />
     }
 
     return (
       <StyleRoot>
         <div className="App">
-          <Header></Header>
-
-          <p className={classes.join(' ')}>My App</p>
-          {/* Ternary Operator */}
-          {/* {
-          this.state.showPersons ?
-            <div>
-              <Person name={this.state.persons[0].name} age={this.state.persons[0].age}></Person>
-              <Person name={this.state.persons[1].name} age={this.state.persons[1].age} changed={this.nameChangeHandler}></Person>
-            </div>
-            : null
-        } */}
-
-          <button style={style} onClick={this.togglePersonHandler}>Toggle Person</button>
-          {/* Normal nested if */}
+          <Cockpit
+            showPersons={this.state.showPersons}
+            persons={this.state.persons}
+            clicked={this.togglePersonHandler}
+          />
           {persons}
         </div>
       </StyleRoot>
