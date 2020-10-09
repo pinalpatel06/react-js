@@ -19,8 +19,16 @@ class Persons extends Component<Props, State> {
         super(props)
     }
 
+    // Avoid unnecessacery updates cycle
+    shoudComponentUpdate(nextProps: Props, nextState: State) {
+        if (nextProps.persons !== this.props.persons) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     componentWillUnmount() {
-        console.log('detach');
+        console.log("detach");
     }
 
     render() {

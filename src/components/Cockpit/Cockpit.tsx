@@ -14,6 +14,14 @@ const Cockpit = (props: any) => {
     })
   }, []);
 
+  // No second arg means this function will run on every updates
+  useEffect(() => {
+    console.log("useEffect");
+    return () => {
+      console.log("clean up");
+    };
+  });
+
   const style = {
     backgroundColor: 'green',
     color: 'white',
@@ -56,4 +64,4 @@ const Cockpit = (props: any) => {
   );
 }
 
-export default Radium(Cockpit);
+export default Radium((Cockpit));
