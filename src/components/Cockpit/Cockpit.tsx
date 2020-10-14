@@ -18,7 +18,7 @@ const Cockpit = (props: any) => {
   // No second arg means this function will run on every updates
   useEffect(() => {
     console.log("useEffect");
-    toggleBtnRef.current.click(); 
+    // toggleBtnRef.current.click(); 
     return () => {
       console.log("clean up");
     };
