@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, Fragment, useRef} from 'react';
 import Header from '../Header/Header';
 import Radium, { StyleRoot } from 'radium';
 
 const Cockpit = (props: any) => {
 
+  let toggleBtnRef = useRef(null);
+
   // Life cycle hooks for functional components
   useEffect(() => {
     console.log('useEffect');
-
     // http call
     setTimeout(() => {
       alert('response');
@@ -17,6 +18,7 @@ const Cockpit = (props: any) => {
   // No second arg means this function will run on every updates
   useEffect(() => {
     console.log("useEffect");
+    toggleBtnRef.current.click(); 
     return () => {
       console.log("clean up");
     };
@@ -55,11 +57,11 @@ const Cockpit = (props: any) => {
 
   return (
     <StyleRoot>
-      <div>
+      <Fragment>
         <Header></Header>
         <p className={classes.join(' ')}>My App</p>
-        <button style={style} onClick={props.clicked}>Toggle Person</button>
-      </div>
+        <button  ref={toggleBtnRef} style={style} onClick={props.clicked}>Toggle Person</button>
+      </Fragment>
     </StyleRoot>
   );
 }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
-import './Person.scss';
 import { PersonIntr } from '../../../Core/Intefaces/PersonInterface';
 
 interface State {
@@ -18,8 +17,15 @@ interface Props {
 
 class Person extends Component<Props, State> {
 
+    inputElemt: any;
+
     constructor(props: Props) {
-        super(props)
+        super(props);
+        this.inputElemt = React.createRef();
+    }
+
+    componentDidMount() {
+        this.inputElemt.current.focus();
     }
 
     render() {
@@ -34,6 +40,8 @@ class Person extends Component<Props, State> {
                 className="Person" style={style}>
                 <p onClick={() => this.props.clicked(this.props.id)} >I'am {this.props.name}</p>
                 <input type="text"
+                    // ref={(inputEl) => {this.inputElemt = inputEl}}
+                    ref={this.inputElemt}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.props.changed(event, this.props.id)} value={this.props.name}
                 />
             </div>

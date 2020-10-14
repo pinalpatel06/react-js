@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import Radium, { StyleRoot } from 'radium';
 
 import './App.css';
+import withClass from '../HOC/WithClass';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import { PersonIntr } from '../Core/Intefaces/PersonInterface';
+import { Fragment } from 'react';
 
 class App extends Component {
 
@@ -57,7 +59,7 @@ class App extends Component {
     });
   }
 
-  render() {  
+  render() {
     let persons = null;
 
     {/* Normal nested if */ }
@@ -71,19 +73,21 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
-        <div className="App">
-          <Cockpit
-            showPersons={this.state.showPersons}
-            persons={this.state.persons}
-            clicked={this.togglePersonHandler}
-          />
-          {persons}
-        </div>
-      </StyleRoot>
+      <Fragment>
+        <StyleRoot>
+          <div className="App">
+            <Cockpit
+              showPersons={this.state.showPersons}
+              persons={this.state.persons}
+              clicked={this.togglePersonHandler}
+            />
+            {persons}
+          </div>
+        </StyleRoot>
+      </Fragment>
     );
   }
 }
 
-export default Radium(App);
+export default App;
 
