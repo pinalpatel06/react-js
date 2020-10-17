@@ -3,7 +3,15 @@ import React, { Component } from 'react';
 import Aux from '../../../hoc/Aux/Aux';
 import Button from '../../UI/Button/Button';
 
-class OrderSummary extends Component {
+interface Props {
+    ingredients: any;
+    price: number;
+    purchaseCancelled: () => void;
+    purchaseContinued: () => void;
+}
+interface State {}
+
+class OrderSummary extends Component<Props, State>  {
     // This could be a functional component, doesn't have to be a class
     componentWillUpdate() {
         console.log('[OrderSummary] WillUpdate');

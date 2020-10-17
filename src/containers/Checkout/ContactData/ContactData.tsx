@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import classes from './ContactData.css';
+import  './ContactData.css';
 import axios from '../../../axios-orders';
 import Input from '../../../components/UI/Input/Input';
 
-class ContactData extends Component {
+interface Props {
+    ingredients: {[key: string]: any};
+    history: any;
+    price: number;
+
+}
+interface State {
+    orderForm: any;
+    formIsValid: boolean;
+    loading: boolean;
+}
+
+class ContactData extends Component<Props, State> {
     state = {
         orderForm: {
             name: {
@@ -95,7 +108,7 @@ class ContactData extends Component {
         loading: false
     }
 
-    orderHandler = ( event ) => {
+    orderHandler =  (event: any) => {
         event.preventDefault();
         this.setState( { loading: true } );
         const formData = {};
@@ -117,7 +130,7 @@ class ContactData extends Component {
             } );
     }
 
-    checkValidity(value, rules) {
+    checkValidity(value: string, rules: any) {
         let isValid = true;
         if (!rules) {
             return true;
@@ -148,7 +161,7 @@ class ContactData extends Component {
         return isValid;
     }
 
-    inputChangedHandler = (event, inputIdentifier) => {
+    inputChangedHandler = (event: any, inputIdentifier: any) => {
         const updatedOrderForm = {
             ...this.state.orderForm
         };
@@ -186,7 +199,7 @@ class ContactData extends Component {
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched}
-                        changed={(event) => this.inputChangedHandler(event, formElement.id)} />
+                        changed={(event: React.ChangeEvent<HTMLInputElement>) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
                 <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
             </form>
@@ -195,7 +208,7 @@ class ContactData extends Component {
             form = <Spinner />;
         }
         return (
-            <div className={classes.ContactData}>
+            <div className="ContactData">
                 <h4>Enter your Contact Data</h4>
                 {form}
             </div>
@@ -203,4 +216,11 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = (state) => {
+    return {
+        ingredients: state.ingredients,
+        totalPrice: state.totalPrice
+    }
+}
+
+export default connect(mapStateToProps)(ContactData);
