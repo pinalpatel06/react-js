@@ -1,5 +1,5 @@
 import { StateCounter, Action } from "./interfaces";
-import * as actionsType from "./actions";
+import * as actionsType from "./actions/actions";
 
 const initialState = {
     counter: 0,

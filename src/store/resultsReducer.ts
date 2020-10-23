@@ -1,5 +1,5 @@
 import {Action, StateResults, State } from "./interfaces";
-import * as actionsType from "./actions";
+import * as actionsType from "./actions/actions";
 
 const initialState = {
         result: [],
